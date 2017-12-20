@@ -1,0 +1,15 @@
+	/* AIzaSyBwWGBHOn0p3WWAZO-V-iuS_S0jelgOXTI
+
+content_copy4
+
+curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:5000/receiver
+*/
+.navbar{
+	margin: 0;
+}
+#main_map{
+	height: 100%;
+}
+#news{
+	
+}
