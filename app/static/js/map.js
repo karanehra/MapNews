@@ -1,15 +1,13 @@
 function displayData(bundle){
-	$("#news").html(bundle[0].long_name + bundle[1].long_name + bundle[2].long_name +bundle[3].long_name);
-	$("#news").css({'display':'block'})
+	$("#add0").html(bundle["add0"])
+	$("#add1").html(bundle["add1"])
+	$("#add03").html(bundle["add2"] +', '+bundle["add3"]);
+	$("#click_popup_right").css({'display':'block'})
 };
 
 $("#kill").click(function(){
 	$("#news").css({'display':'none'})
 });
-
-
-
-
 
 function initMap() {
     var myLatlng = {lat: -25.363, lng: 131.044};
@@ -29,14 +27,12 @@ function initMap() {
     var input = coords;
     var latlngStr = input.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
-	console.log(latlng)
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
-			var address = results[0].address_components;
+			var address = results[1].address_components;
 			var address_json = {};
 			address_json['data'] = address
-			console.log(results)
 	   		$.ajax({
  					type: 'POST',
 	                contentType: 'application/json',
@@ -44,11 +40,11 @@ function initMap() {
 	                dataType: 'json',
 	                url: 'http://localhost:5000/function_route',
 	                success: function (e) {
-	                    console.log(e.data);
-	                    displayData(e.data);
+	                    console.log(e);
+	                    displayData(e);
 	                },
 	                error: function(error) {
-	                console.log(error);
+	                	console.log(error);
 	            }
 	        });
 

@@ -7,9 +7,30 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password
 .navbar{
 	margin: 0;
 }
-#main_map{
-	height: 100%;
+#map{
+	height: 90%;
+	z-index: 0;
 }
 #news{
 	
+}
+#click_popup_right{
+	height: 83%;
+	position: absolute;
+	top:8%;
+	width: 45%;
+	left: 50%;
+	background-color: rgba(236, 240, 241,1);
+	color: black;
+	z-index: 100000;
+	margin: 20px;
+	border-radius: 5px;
+	padding: 10px 20px 10px 20px;
+}
+.line{
+	border-bottom: 1px solid black;
+	height: 1px;
+}
+.center{
+	text-align: center;
 }
