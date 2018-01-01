@@ -9,8 +9,6 @@ import requests
 def index():
     return render_template('base.html')
 
-
-
 @app.route("/function_route", methods=["GET", "POST"])
 def my_function():
     if request.method == "POST":
@@ -29,4 +27,6 @@ def my_function():
 def get_news(address):
     r = requests.get("https://www.google.co.in/search?q=Shire+of+East+Pilbara++Western+Australia&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678")
     soup = BeautifulSoup(r.text,"html.parser")   
-    soup.find_all("div", id="search")
+    soup = soup.body.find("div" , id="search")
+    soup = soup.find_all("div", class_="g")
+    print soup[0]
