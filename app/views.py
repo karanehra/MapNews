@@ -25,16 +25,33 @@ def my_function():
 
 
 def get_news(address):
-    r = requests.get("https://www.google.co.in/search?q=Shire+of+East+Pilbara++Western+Australia&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678")
+    address = address.split(" ")
+    address.pop()
+    query = ''
+    for i in range(0,len(address)):
+        print address[i]
+        if i < (len(address) - 1) and address[i] != '':
+            query = query+str(address[i])+'+'
+        if i == (len(address)-1) and address[i] != '':
+            query = query + str(address[i])
+    print "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678"
+    r = requests.get("https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678")
     soup = BeautifulSoup(r.text,"html.parser")   
     soup = soup.body.find("div" , id="search")
     soup = soup.find_all("div", class_="g")
+    # print soup[0].find("div",class_="st")
     links =[]
+    headings = []
+    descripts = []
     for obj in soup:
         link = obj.find_all("a")
         link = link[0]
+        heading = link.text
         link = link['href']
         link = link.split("=")[1]
         link = link.split("&")[0]
+        descript = obj.find("div",class_="st").text
+        descripts.append(descript)
         links.append(link)
-    print len(links)
+        headings.append(heading)
+    print headings
