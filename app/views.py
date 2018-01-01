@@ -12,30 +12,30 @@ def index():
 @app.route("/function_route", methods=["GET", "POST"])
 def my_function():
     if request.method == "POST":
-        data = {}    
-        data['address'] = request.json['data']
-        address = {}
-        address_string = str('')
-        length = len(data['address'])
+        data = request.json['data']  
+        length = len(data)
+        address = range(0,length)
         for i in range(0,length):
-            address["add"+str(i)] = data['address'][i]['long_name']
-            address_string = address_string + str(address["add"+str(i)]) + str(' ')
-        get_news(address_string)
+            address[i] = str(data[i]['long_name'])
+        print address
+        query=''
+        for i in range(0,len(address)):
+            if not any(char.isdigit() for char in str(address[i])) and i < (len(address)-1):
+                query = query + address[i] + '+'
+            elif not any(char.isdigit() for char in address[i]):
+                query = query + address[i]
+        query = query.replace(' ', '+')
+
+        
+        print get_news(query)
+
+        
         return jsonify(address)
 
 
-def get_news(address):
-    address = address.split(" ")
-    address.pop()
-    query = ''
-    for i in range(0,len(address)):
-        print address[i]
-        if i < (len(address) - 1) and address[i] != '':
-            query = query+str(address[i])+'+'
-        if i == (len(address)-1) and address[i] != '':
-            query = query + str(address[i])
-    print "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678"
-    r = requests.get("https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjKufXizZnYAhUHso8KHULyC9wQ_AUICygC&biw=676&bih=678")
+def get_news(query):
+    print "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws"
+    r = requests.get("https://www.google.co.in/search?q="+query+"&source=lnms&tbm=nws")
     soup = BeautifulSoup(r.text,"html.parser")   
     soup = soup.body.find("div" , id="search")
     soup = soup.find_all("div", class_="g")
@@ -54,4 +54,11 @@ def get_news(address):
         descripts.append(descript)
         links.append(link)
         headings.append(heading)
-    print headings
+    news = []
+    for i in range(0,len(links)):
+        newsobject = {}
+        newsobject["link"] = str(links[i])
+        newsobject["heading"] = str(headings[i])
+        newsobject["description"] = str(descripts[i])
+        news.append(newsobject)
+    return news
