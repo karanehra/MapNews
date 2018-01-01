@@ -29,4 +29,12 @@ def get_news(address):
     soup = BeautifulSoup(r.text,"html.parser")   
     soup = soup.body.find("div" , id="search")
     soup = soup.find_all("div", class_="g")
-    print soup[0]
+    links =[]
+    for obj in soup:
+        link = obj.find_all("a")
+        link = link[0]
+        link = link['href']
+        link = link.split("=")[1]
+        link = link.split("&")[0]
+        links.append(link)
+    print len(links)
