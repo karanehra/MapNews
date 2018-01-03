@@ -25,12 +25,7 @@ def my_function():
             elif not any(char.isdigit() for char in address[i]):
                 query = query + address[i]
         query = query.replace(' ', '+')
-
-        
-        print get_news(query)
-
-        
-        return jsonify(address)
+        return jsonify(get_news(query))
 
 
 def get_news(query):
@@ -58,7 +53,7 @@ def get_news(query):
     for i in range(0,len(links)):
         newsobject = {}
         newsobject["link"] = str(links[i])
-        newsobject["heading"] = str(headings[i])
-        newsobject["description"] = str(descripts[i])
+        newsobject["heading"] = headings[i].encode('utf-8')
+        newsobject["description"] = descripts[i].encode('utf-8')
         news.append(newsobject)
     return news

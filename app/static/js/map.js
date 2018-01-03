@@ -1,16 +1,21 @@
-function displayData(bundle){
-	$("#add0").html(bundle["add0"])
-	$("#add1").html(bundle["add1"])
-	$("#add03").html(bundle["add2"] +', '+bundle["add3"]);
-	$("#click_popup_right").css({'display':'block'})
+function displayData(address,news){
+	console.log(address.length)
+	for (var i = 0; i < address.length; i++) {
+		$("#add"+String(i)).html(String(address[i]["long_name"])+" "); 
+	}
+	$("#news").empty()
+	if (news.length == 0) {
+		$("#news").html("no news")
+	}
+	else{
+		for (var j = 0; j < news.length; j++) {
+			$("#news").append("<div>" + String(news[j].heading)+"</div>")
+		}
+	}
 };
 
-$("#kill").click(function(){
-	$("#news").css({'display':'none'})
-});
-
 function initMap() {
-    var myLatlng = {lat: -25.363, lng: 131.044};
+    var myLatlng = {lat: 25.363, lng: 100.044};
 
     var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 4,
@@ -31,6 +36,12 @@ function initMap() {
       if (status === 'OK') {
         if (results[0]) {
 			var address = results[1].address_components;
+			for(i = 0; i < address.length; i++){
+				str = String(address[i])
+				if(str.match(".*\\d.*")){
+				   var pop = i
+				} 
+			}
 			var address_json = {};
 			address_json['data'] = address
 	   		$.ajax({
@@ -39,9 +50,8 @@ function initMap() {
 	                data: JSON.stringify(address_json),
 	                dataType: 'json',
 	                url: 'http://localhost:5000/function_route',
-	                success: function (e) {
-	                    console.log(e);
-	                    displayData(e);
+	                success: function (news) {
+	                    displayData(address,news);
 	                },
 	                error: function(error) {
 	                	console.log(error);
