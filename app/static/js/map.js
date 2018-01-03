@@ -1,6 +1,7 @@
 function displayData(address,news){
 	console.log(address.length)
 	for (var i = 0; i < address.length; i++) {
+		$("#add"+String(i)).empty();
 		$("#add"+String(i)).html(String(address[i]["long_name"])+" "); 
 	}
 	$("#news").empty()
@@ -9,7 +10,7 @@ function displayData(address,news){
 	}
 	else{
 		for (var j = 0; j < news.length; j++) {
-			$("#news").append("<div>" + String(news[j].heading)+"</div>")
+			$("#news").append('<div class="newsitem">' + String(news[j].heading)+'</div>')
 		}
 	}
 };
