@@ -1,5 +1,6 @@
 function displayData(address,news){
 	console.log(address.length)
+	$("#click_popup_right").css("display","block")
 	for (var i = 0; i < address.length; i++) {
 		$("#add"+String(i)).empty();
 		$("#add"+String(i)).html(String(address[i]["long_name"])+" "); 
@@ -10,7 +11,9 @@ function displayData(address,news){
 	}
 	else{
 		for (var j = 0; j < news.length; j++) {
-			$("#news").append('<div class="newsitem">' + String(news[j].heading)+'</div>')
+			$("#news").append('<div class="newsitem"> \
+				<div class="heading"><a href="'+news[j].link+'">'+news[j].heading+'</a> </div>\
+				<div class="description">'+news[j].description+'</div></div>')
 		}
 	}
 };

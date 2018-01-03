@@ -37,7 +37,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password
 }
 .newsitem{
 	font-size: 18px;
-    padding: 5px;
+    padding: 10px;
     margin: 10 0 10 0;
     border: 1px solid lightgray;
     border-radius: 5px;
