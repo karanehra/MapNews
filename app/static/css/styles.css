@@ -1,14 +1,15 @@
-	/* AIzaSyBwWGBHOn0p3WWAZO-V-iuS_S0jelgOXTI
 
-content_copy4
-
-curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:5000/receiver
-*/
 .navbar{
 	margin: 0;
+	border-radius: 0;
+	background-color: #2980b9;
+	border: none;
+}
+.navbar-brand{
+	color: white !important;
 }
 #map{
-	height: 90%;
+	height: 95%;
 	z-index: 0;
 }
 #news{
@@ -42,4 +43,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password
     border: 1px solid lightgray;
     border-radius: 5px;
     background-color: white;
+}
+body{
+	overflow: hidden;
 }

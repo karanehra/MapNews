@@ -1,3 +1,7 @@
+
+
+
+
 function displayData(address,news){
 	console.log(address.length)
 	$("#click_popup_right").css("display","block")
