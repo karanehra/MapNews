@@ -1,12 +1,11 @@
-
-
-
-
 function displayData(address,news){
 	console.log(address.length)
 	$("#click_popup_right").css("display","block")
+	for (var j = 0; j<6;j++){
+		$("#add"+String(j)).empty();
+	}
 	for (var i = 0; i < address.length; i++) {
-		$("#add"+String(i)).empty();
+		
 		$("#add"+String(i)).html(String(address[i]["long_name"])+" "); 
 	}
 	$("#news").empty()
@@ -34,12 +33,14 @@ function initMap() {
     map.addListener('click', function(event) {
 		var input_latlng = event.latLng.lat() + ',' + event.latLng.lng()
 		geocodeLatLng(geocoder,map,input_latlng)
+
 	});
 
     function geocodeLatLng(geocoder, map,coords) {
     var input = coords;
     var latlngStr = input.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+    map.panTo(latlng);
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
