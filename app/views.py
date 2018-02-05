@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, request, jsonify
+from flask import render_template, flash, redirect, request, jsonify, session, abort
 from app import app
 from .forms import LoginForm
 from bs4 import BeautifulSoup
@@ -26,6 +26,26 @@ def my_function():
                 query = query + address[i]
         query = query.replace(' ', '+')
         return jsonify(get_news(query))
+
+@app.route("/login_screen" , methods = ["GET", "POST"])
+def login_screen():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('banner.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return login_screen()
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return login_screen()
 
 
 def get_news(query):
